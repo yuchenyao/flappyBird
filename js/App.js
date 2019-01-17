@@ -1,13 +1,26 @@
 import DataBus from './DataBus';
-import Background  from './runtime/Background.js';
+import Background from './runtime/Background.js';
+import Intro  from './runtime/Intro.js';
+// import Bird from './runtime/Bird.js';
+import Pipe from './runtime/Pipe.js';
 
 let dataBus = null;
 let bg = null;
+let intro = null;
+let bird = null;
+let pipe1 = null;
+let pipe2 = null;
+
 let ctx = canvas.getContext('2d');
 
+
 const start = () => {
+
   dataBus = new DataBus();
   bg = new Background(ctx);
+  // intro = new Intro(ctx);
+  pipe1 = new Pipe(ctx,320);
+
   loop();
 };
 
@@ -32,16 +45,24 @@ const stopAnimation = () => {
  */
 const loop = () => {
   dataBus.frame ++ ;
-  update();
+  update(dataBus.frame);
   render();
   startNextAnimation();
+  // if(dataBus.frame % 30 === 0) {
+  //   pipe = new Pipe();
+  // }
 };
 
 /**
  * 更新逻辑
  */
-const update = () => {
+const update = (frame) => {
   bg.update();
+  // intro.update(frame);
+  pipe1.update(frame);
+
+
+
 };
 
 /**
@@ -50,6 +71,10 @@ const update = () => {
 const render = () => {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   bg.render(ctx);
+  // intro.render(ctx);
+  pipe1.render(ctx);
+
+
 };
 
 /**
